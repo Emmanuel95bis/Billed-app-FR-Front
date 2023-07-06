@@ -15,6 +15,23 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
+
+  checkedChangeFile = (fileName) => {
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    console.log("AAAAAAAAAAAAAABBBBBBBBB");
+
+    if (!allowedExtensions.exec(fileName)) {
+      alert('Type de fichier pas conforme');
+      return false;
+    }
+    
+    return true;
+  }
+
+
+
+
+
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
@@ -24,6 +41,14 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
+
+    //const newBillInstance = new NewBill();
+
+console.log('111111111111');
+if (!this.checkedChangeFile(fileName)) {
+  console.log("Invalid file name: " + fileName);
+  e.target.value="";
+}
 
     this.store
       .bills()
@@ -63,6 +88,7 @@ export default class NewBill {
 
   // not need to cover this function by tests
   updateBill = (bill) => {
+    console.log('ZZZZZZZZZZZZZZZ')
     if (this.store) {
       this.store
       .bills()
@@ -74,3 +100,4 @@ export default class NewBill {
     }
   }
 }
+
