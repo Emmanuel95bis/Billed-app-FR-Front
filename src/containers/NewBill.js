@@ -1,6 +1,7 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
+
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -16,35 +17,32 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
 
+
   checkedChangeFile = (fileName) => {
     const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-    console.log("AAAAAAAAAAAAAABBBBBBBBB");
-
+ 
     if (!allowedExtensions.exec(fileName)) {
-      alert('Type de fichier pas conforme');
+      //alert('Type de fichier pas conforme');
       return false;
     }
     
     return true;
   }
 
-
-
-
-
   handleChangeFile = e => {
+  
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
+    
     const fileName = filePath[filePath.length-1]
+ 
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
 
-    //const newBillInstance = new NewBill();
-
-console.log('111111111111');
+ 
 if (!this.checkedChangeFile(fileName)) {
   console.log("Invalid file name: " + fileName);
   e.target.value="";
@@ -59,7 +57,6 @@ if (!this.checkedChangeFile(fileName)) {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
@@ -87,8 +84,8 @@ if (!this.checkedChangeFile(fileName)) {
   }
 
   // not need to cover this function by tests
+  
   updateBill = (bill) => {
-    console.log('ZZZZZZZZZZZZZZZ')
     if (this.store) {
       this.store
       .bills()
